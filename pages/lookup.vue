@@ -27,9 +27,7 @@
     </div>
     <div v-if="submitted" class="mt-4">
       see the
-      <a class="font-bold cursor-pointer" @click="openNewTab(domainName)"
-        >website</a
-      >
+      <a class="font-bold cursor-pointer" @click="openDomainWebsite">website</a>
       at the domain
     </div>
   </div>
@@ -52,10 +50,13 @@ export default {
     validateForm() {
       return this.domainName && this.domainName !== "";
     },
+    actualDomainName() {
+      return this.domainName.replace(/(^\w+:|^)\/\//, "");
+    },
   },
   methods: {
-    openNewTab(url) {
-      window.open(`https://${url}`, "_blank");
+    openDomainWebsite() {
+      window.open(`https://${this.actualDomainName}`, "_blank");
     },
     pushto(to: any) {
       this.$router.push(to);
@@ -67,10 +68,11 @@ export default {
 
       this.loading = true;
       let [result, error, status] = await this.domainToIpLookup(
-        this.domainName
+        this.actualDomainName
       );
       this.loading = false;
 
+      console.log("domainToIpLookup status:", status);
       if (error) {
         this.errorStatus =
           "an error occured when querying dns, try again later";
