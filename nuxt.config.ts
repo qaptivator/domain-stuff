@@ -3,21 +3,21 @@ export default defineNuxtConfig({
   ssr: false,
   app: {
     head: {
-      title: "JToH XL Project Tower Tracker",
+      title: "domain stuff",
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         {
           hid: "description",
           name: "description",
-          content: "Shows your JToH XL Project tower completions.",
+          content: "a bunch of tools for domain names",
         },
       ],
       link: [
         { rel: "shortcut icon", type: "image/x-icon", href: "favicon.ico" },
       ],
     },
-    baseURL: "/jtoh-xl-tower-tracker/",
+    baseURL: "/domain-stuff/",
     buildAssetsDir: "assets",
   },
   modules: ["@nuxtjs/tailwindcss"], // "@nuxt/test-utils/module"
