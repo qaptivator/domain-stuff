@@ -1,1 +1,0 @@
-import{_ as t,v as o,B as s,x as a,t as c}from"./BoCMtrnD.js";const n={name:"IndexPage",data(){return{}},mounted(){},methods:{pushto(e){this.$router.push(e)}}},r={class:"p-4 text-xl"},d=a("div",null,"> trace",-1);function _(e,p,i,u,l,m){return c(),o("div",r,[d,s(" coming soon... ")])}const h=t(n,[["render",_]]);export{h as default};
