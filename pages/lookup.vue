@@ -65,7 +65,10 @@ export default {
       this.openWindow(`https://${this.actualDomainName}`);
     },
     async submitForm() {
-      if (!this.validateForm) return;
+      if (!this.validateForm) {
+        this.errorStatus = "form is invalid";
+        return;
+      }
       this.submitted = false;
       this.errorStatus = "";
       this.loading = true;

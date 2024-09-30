@@ -12,8 +12,10 @@
       <p>> it's nothing special, really, mostly just for my personal use</p>
       <p>
         > feel free to look around, and maybe even check out the
-        <a href="https://github.com/qaptivator/domain-stuff" target="_blank"
-          >github</a
+        <NuxtLink
+          to="https://github.com/qaptivator/domain-stuff"
+          target="_blank"
+          >github</NuxtLink
         >
         repository...
       </p>

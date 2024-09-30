@@ -1,4 +1,4 @@
-import { nodePolyfills } from "vite-plugin-node-polyfills";
+//import { nodePolyfills } from "vite-plugin-node-polyfills";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     buildAssetsDir: "assets",
   },
   vite: {
-    plugins: [nodePolyfills()],
+    //plugins: [nodePolyfills()],
   },
   modules: ["@nuxtjs/tailwindcss"], // "@nuxt/test-utils/module"
   css: ["~/assets/css/main.css"],
