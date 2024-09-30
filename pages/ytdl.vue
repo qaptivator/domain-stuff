@@ -8,7 +8,7 @@
 </template>
 <script lang="ts">
 export default {
-  name: "IndexPage",
+  name: "Ytdl",
   data() {
     return {
       videoUrl: "",

@@ -38,7 +38,7 @@
 <script lang="ts">
 import axios from "axios";
 export default {
-  name: "IndexPage",
+  name: "Lookup",
   data() {
     return {
       domainName: "",
