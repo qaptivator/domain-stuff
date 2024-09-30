@@ -1,6 +1,6 @@
 <template>
   <div class="p-4 text-xl">
-    <div>> domain lookup</div>
+    <h1>> domain lookup</h1>
     <p>check the availability of a given domain name</p>
     <p class="mb-8 text-sm opacity-30">powered by Google Public DNS</p>
     <div class="flex w-full max-w-80">
