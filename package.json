@@ -18,11 +18,13 @@
     "@vue/test-utils": "^2.4.3",
     "gh-pages": "^4.0.0",
     "nuxt": "^3.9.0",
+    "vite-plugin-node-polyfills": "^0.21.0",
     "vitest": "^1.2.0",
     "vue": "^3.4.6",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "axios": "^1.6.5"
+    "axios": "^1.6.5",
+    "ytdl-core": "^4.11.5"
   }
 }

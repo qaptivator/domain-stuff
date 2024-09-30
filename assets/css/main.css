@@ -24,4 +24,7 @@ body,
   .font-outline-4 {
     -webkit-text-stroke: 4px black;
   }
+  a {
+    @apply cursor-pointer underline underline-offset-2;
+  }
 }
