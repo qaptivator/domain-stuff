@@ -8,16 +8,20 @@
       />
       <div class="flex overflow-x-auto space-x-10 whitespace-nowrap p-4">
         <NuxtLink class="no-underline hover:underline" to="/lookup"
-          >domain lookups</NuxtLink
+          >domain lookup</NuxtLink
         >
-        <NuxtLink class="no-underline hover:underline" to="/rppb"
+        <NuxtLink class="no-underline hover:underline cursor-pointer" to="/ytdl"
+          >youtube download</NuxtLink
+        >
+        <NuxtLink
+          class="no-underline hover:underline cursor-pointer"
+          to="/external-tools"
+          >best external tools</NuxtLink
+        >
+        <!--<NuxtLink class="no-underline hover:underline" to="/rppb"
           >rppb</NuxtLink
-        >
-        <!--<NuxtLink
-        class="hover:underline underline-offset-2 cursor-pointer"
-        to="/ytdl"
-        >youtube download</NuxtLink
-      >
+        >-->
+        <!--
       <NuxtLink
         class="hover:underline underline-offset-2 cursor-pointer"
         to="/find-song"

@@ -19,6 +19,7 @@
         >
         repository...
       </p>
+      <p>> created by qaptivator</p>
     </div>
   </div>
 </template>

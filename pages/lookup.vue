@@ -58,6 +58,12 @@ export default {
     },
   },
   methods: {
+    openWindow(url: string | URL) {
+      if (window) window.open(url, "_blank");
+    },
+    notEmpty(v: any): boolean {
+      return v ? true : false;
+    },
     routerPush(to: any) {
       this.$router.push(to);
     },
@@ -93,6 +99,7 @@ export default {
             params: {
               name: domain,
             },
+            timeout: 5000,
           })
           .then((res) => {
             const data: any = res.data;
