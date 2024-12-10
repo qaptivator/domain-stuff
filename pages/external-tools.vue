@@ -41,6 +41,15 @@
           >carbon by carbon_app</NuxtLink
         >
       </li>
+      <li>
+        >
+        <NuxtLink
+          class="no-underline hover:underline"
+          to="https://www.realtimecolors.com/"
+          target="_blank"
+          >Realtime Colors by Juxtopposed</NuxtLink
+        >
+      </li>
     </ul>
   </div>
 </template>
