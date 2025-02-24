@@ -83,9 +83,11 @@ export default {
 				const [name, link] = entry.split('|') ?? ['', '']
 				//if (!name || !link) return; // what if i leave link intentionally empty for some reason?
 				if (!name) return
+				const trimmedName = name.trim()
+				const trimmedLink = link.trim()
 				this.externalTools.push({
-					name,
-					link,
+					name: trimmedName,
+					link: trimmedLink,
 				})
 			}
 		},
