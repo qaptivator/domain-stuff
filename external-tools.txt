@@ -1,4 +1,10 @@
-QuickPic by t3dotgg|https://quickpic.t3.gg/
+File Pilot* by Vjekoslav|https://filepilot.tech/
+plainIMG by qaptivator|https://github.com/qaptivator/plainimg2
 carbon by carbon_app|https://carbon.now.sh/
+cobalt.tools by imput|https://cobalt.tools/
 Realtime Colors by Juxtopposed|https://www.realtimecolors.com/
-File Pilot by Vjekoslav|https://filepilot.tech/
+File Converter by Tichau|https://github.com/Tichau/FileConverter
+WinCompose by samhocevar|https://github.com/samhocevar/wincompose
+ActivityWatch by ActivityWatch|https://github.com/ActivityWatch/activitywatch
+QuickPic by t3dotgg|https://quickpic.t3.gg/
+WizTree by Antibody Software|https://diskanalyzer.com/
