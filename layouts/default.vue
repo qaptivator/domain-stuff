@@ -25,7 +25,7 @@
 				<NuxtLink
 					class="no-underline hover:underline cursor-pointer"
 					to="/mouse"
-					>mouse tools</NuxtLink
+					>mouse tests</NuxtLink
 				>
 				<!--<NuxtLink class="no-underline hover:underline" to="/rppb"
           >rppb</NuxtLink

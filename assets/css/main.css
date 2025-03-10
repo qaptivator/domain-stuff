@@ -6,25 +6,28 @@ html,
 body,
 #__nuxt,
 #__layout {
-  overflow: hidden;
-  padding: 0 !important;
-  margin: 0 !important;
-  height: 100% !important;
-  width: 100% !important;
+	overflow: hidden;
+	padding: 0 !important;
+	margin: 0 !important;
+	height: 100% !important;
+	width: 100% !important;
 }
 
 @layer base {
-  .font-outline-1 {
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-      1px 1px 0 #000;
-  }
-  .font-outline-2 {
-    -webkit-text-stroke: 2px black;
-  }
-  .font-outline-4 {
-    -webkit-text-stroke: 4px black;
-  }
-  a {
-    @apply cursor-pointer underline underline-offset-2;
-  }
+	.font-outline-1 {
+		text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+			1px 1px 0 #000;
+	}
+	.font-outline-2 {
+		-webkit-text-stroke: 2px black;
+	}
+	.font-outline-4 {
+		-webkit-text-stroke: 4px black;
+	}
+	a {
+		@apply cursor-pointer underline underline-offset-2;
+	}
+	h1 {
+		@apply font-bold;
+	}
 }

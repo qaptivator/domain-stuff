@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<h2 class="mb-2">Test your mouse scroll wheel</h2>
+	<div class="w-min">
+		<h2 class="mb-2 font-bold">Test your mouse scroll wheel</h2>
 		<div v-show="error">
 			<div style="width: 300px; height: 300px; background-color: gray"></div>
 			<p class="mt-2 text-sm">There was an error loading the canvas</p>
@@ -11,6 +11,7 @@
 				ref="scrollCanvas"
 				width="300"
 				height="300"
+				class="rounded-md"
 			></canvas>
 			<p class="mt-2 text-sm">
 				Scroll in one direction, and if colors change,<br />
@@ -36,13 +37,15 @@ const x = ref<number>(150)
 const y = ref<number>(150)
 const prevx = ref<number>(150)
 const prevy = ref<number>(150)
-const tickHeight = ref<number>(10)
 const tickColor = ref<string>('black')
+
+const TICK_HEIGHT = 10
+const TICK_SPEED = 0.3
 
 function draw(ctx: CanvasRenderingContext2D) {
 	if (!scrollCanvas.value) return
 
-	ctx.fillStyle = 'rgba(0, 0, 0, 0.02)'
+	ctx.fillStyle = 'rgba(0, 0, 0, 0.015)'
 	ctx.fillRect(0, 0, scrollCanvas.value.width, scrollCanvas.value.height)
 
 	ctx.lineWidth = 20
@@ -53,7 +56,7 @@ function draw(ctx: CanvasRenderingContext2D) {
 	ctx.stroke()
 
 	prevx.value = x.value
-	x.value += 0.5
+	x.value += TICK_SPEED
 	if (x.value > scrollCanvas.value.width) {
 		x.value = 0
 		prevx.value = x.value
@@ -65,10 +68,10 @@ function handleScroll(event: WheelEvent) {
 
 	const notchesScrolled = event.deltaY > 0 ? 1 : -1
 
-	tickColor.value = notchesScrolled < 0 ? 'green' : 'red'
+	tickColor.value = notchesScrolled < 0 ? 'lime' : 'red'
 
 	prevy.value = y.value
-	y.value += notchesScrolled * tickHeight.value
+	y.value += notchesScrolled * TICK_HEIGHT
 
 	if (y.value > scrollCanvas.value.height) {
 		y.value = 0
