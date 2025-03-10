@@ -24,6 +24,9 @@ body,
 	.font-outline-4 {
 		-webkit-text-stroke: 4px black;
 	}
+	.link-button {
+		@apply no-underline hover:underline cursor-pointer;
+	}
 	a {
 		@apply cursor-pointer underline underline-offset-2;
 	}

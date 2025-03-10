@@ -8,24 +8,29 @@
 			/>
 			<div class="flex overflow-x-auto space-x-10 whitespace-nowrap p-4">
 				<NuxtLink
-					class="no-underline hover:underline"
+					class="link-button"
 					to="/lookup"
 					>domain lookup</NuxtLink
 				>
 				<NuxtLink
-					class="no-underline hover:underline cursor-pointer"
+					class="link-button"
 					to="/ytdl"
 					>youtube download</NuxtLink
 				>
 				<NuxtLink
-					class="no-underline hover:underline cursor-pointer"
+					class="link-button"
 					to="/external-tools"
 					>best external tools</NuxtLink
 				>
 				<NuxtLink
-					class="no-underline hover:underline cursor-pointer"
+					class="link-button"
 					to="/mouse"
 					>mouse tests</NuxtLink
+				>
+				<NuxtLink
+					class="link-button"
+					to="/math"
+					>math tools</NuxtLink
 				>
 				<!--<NuxtLink class="no-underline hover:underline" to="/rppb"
           >rppb</NuxtLink
