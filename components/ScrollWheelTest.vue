@@ -40,7 +40,7 @@ const prevy = ref<number>(150)
 const tickColor = ref<string>('black')
 
 const TICK_HEIGHT = 10
-const TICK_SPEED = 0.3
+const TICK_SPEED = 0.5
 
 function draw(ctx: CanvasRenderingContext2D) {
 	if (!scrollCanvas.value) return

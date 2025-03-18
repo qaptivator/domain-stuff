@@ -27,6 +27,11 @@
 					to="/mouse"
 					>mouse tests</NuxtLink
 				>
+				<NuxtLink
+					class="no-underline hover:underline cursor-pointer"
+					to="/encrypt"
+					>encrypt/decrypt</NuxtLink
+				>
 				<!--<NuxtLink class="no-underline hover:underline" to="/rppb"
           >rppb</NuxtLink
         >-->
