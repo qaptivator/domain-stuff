@@ -2,18 +2,27 @@
 	<div class="p-4 text-xl">
 		<h1>> domain lookup</h1>
 		<p>check the availability of a given domain name</p>
-		<p class="mb-8 text-sm opacity-30">powered by Google Public DNS</p>
+		<p class="mb-8 text-sm opacity-30">
+			powered by
+			<NuxtLink
+				to="https://dns.google/"
+				target="_blank"
+			>
+				Google Public DNS
+			</NuxtLink>
+		</p>
 		<div class="flex w-full max-w-80">
 			<input
 				type="url"
-				class="border p-2 grow w-40 rounded-l-lg"
+				autocomplete="off"
+				class="border p-2 grow w-40 rounded-l-lg bg-slate-100"
 				placeholder="your domain name"
 				v-model="domainName"
 				@keyup.enter="submitForm"
 			/>
 			<button
 				type="button"
-				class="border p-2 px-4 disabled:opacity-30 rounded-r-lg"
+				class="border p-2 px-4 disabled:opacity-30 rounded-r-lg bg-slate-200"
 				:disabled="!validateForm"
 				@click="submitForm"
 			>
@@ -145,7 +154,7 @@ export default {
 								reject('SERVFAIL') // Server failed to complete the DNS request
 								break
 							case 3:
-								resolve('') // Domain name does not exist
+								resolve('') // Domain name does not exist (NXDOMAIN)
 								break
 							case 4:
 								reject('NOTIMP') // Function not implemented
