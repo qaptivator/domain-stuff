@@ -16,9 +16,15 @@
 			i recommend this tool on this website because it has the least amount of
 			ads and it doesnt look as scummy as other video downloaders<br />
 			i am not responsible for any illegal things that you may do on that
-			website
+			website<br />
+			<br />
+			pro tip: use firefox instead of chrome/chromium browsers to pass the
+			cloudfare turnstile faster
 		</p>
-		<p>other cobalt instances include:</p>
+		<p>
+			sometimes, cobalt may not allow to download from youtube because of heavy
+			traffic, so instead you can use other cobalt instances, including:
+		</p>
 		<ul class="ml-4">
 			<li>
 				>
