@@ -26,7 +26,7 @@
 			Try reloading this page or checking your internet connection, and if this
 			issue persists, file a GitHub issue in the repository page.
 		</p>
-		<ul>
+		<ul class="ml-4">
 			<li v-for="tool in externalTools">
 				>
 				<NuxtLink
