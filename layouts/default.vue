@@ -32,6 +32,11 @@
 					to="/encrypt"
 					>encrypt/decrypt</NuxtLink
 				>
+				<NuxtLink
+					class="no-underline hover:underline cursor-pointer"
+					to="/mcuuid"
+					>mcuuid</NuxtLink
+				>
 				<!--<NuxtLink class="no-underline hover:underline" to="/rppb"
           >rppb</NuxtLink
         >-->
