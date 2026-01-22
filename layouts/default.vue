@@ -12,11 +12,11 @@
 					to="/lookup"
 					>domain lookup</NuxtLink
 				>
-				<NuxtLink
+				<!--<NuxtLink
 					class="no-underline hover:underline cursor-pointer"
 					to="/ytdl"
 					>youtube download</NuxtLink
-				>
+				>-->
 				<NuxtLink
 					class="no-underline hover:underline cursor-pointer"
 					to="/external-tools"
