@@ -3,7 +3,7 @@
 		<h1>> mcuuid</h1>
 		<p class="mb-8">
 			get player UUID from username, with support for both official and pirated
-			accounts, or get the username from the UUID! (official only)
+			accounts,<br />or get the username from the UUID! (official only)
 		</p>
 		<div class="mb-4">
 			<p class="mb-1">Username/UUID</p>
@@ -34,8 +34,8 @@
 				v-model="formFormat"
 				class="border p-1 rounded-lg bg-slate-100"
 			>
-				<option value="pretty">Pretty/Dashed</option>
-				<option value="raw">Raw/Undashed</option>
+				<option value="pretty">Pretty / Dashes</option>
+				<option value="raw">Raw / No dashes</option>
 			</select>
 		</div>
 		<div>
@@ -77,6 +77,9 @@ export default {
 		formMode() {
 			this.submitForm()
 		},
+		formFormat() {
+			this.submitForm()
+		},
 	},
 	methods: {
 		async submitForm() {
@@ -98,14 +101,14 @@ export default {
 
 			this.formResult = result
 		},
-		async fetchGet(url: string): Promise<{ data: any } | undefined> {
+		async fetchGet(url: string): Promise<{ data: any }> {
 			try {
 				const res = await fetch(url)
-				if (!res.ok) return undefined
+				if (!res.ok) return { data: undefined }
 				const data = await res.json()
 				return { data }
 			} catch (e) {
-				return undefined
+				return { data: undefined }
 			}
 		},
 		async convertMcuuid(
@@ -120,23 +123,17 @@ export default {
 			if (mode === 'online') {
 				try {
 					// First attempt: Treat input as Username -> Get UUID
-					const res = await axios.get(
-						`https://corsproxy.io/?https://api.mojang.com/users/profiles/minecraft/${nameOrId}`,
-						{
-							transformResponse: (r) => r,
-						}
+					const res = await this.fetchGet(
+						`https://corsproxy.io/?https://api.mojang.com/users/profiles/minecraft/${nameOrId}`
 					)
 					let id = res.data?.id
 
 					// Second attempt: Treat input as UUID -> Get Username
 					if (!id) {
-						const res2 = await axios.get(
+						const res2 = await this.fetchGet(
 							`https://corsproxy.io/?https://sessionserver.mojang.com/session/minecraft/profile/${dedashify(
 								nameOrId
-							)}`,
-							{
-								transformResponse: (r) => r,
-							}
+							)}`
 						)
 						return res2.data?.name || undefined
 					}
