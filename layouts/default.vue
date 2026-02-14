@@ -19,8 +19,8 @@
 				>
 				<NuxtLink
 					class="no-underline hover:underline cursor-pointer"
-					to="/mongoid"
-					>mongoid/uuid</NuxtLink
+					to="/uuid"
+					>uuid/objectid</NuxtLink
 				>
 				<NuxtLink
 					class="no-underline hover:underline cursor-pointer"
