@@ -50,6 +50,7 @@
 	</div>
 </template>
 <script lang="ts">
+// @ts-ignore
 import CryptoJS from 'crypto-js'
 import axios from 'axios'
 export default {

@@ -12,15 +12,20 @@
 					to="/lookup"
 					>domain lookup</NuxtLink
 				>
-				<!--<NuxtLink
-					class="no-underline hover:underline cursor-pointer"
-					to="/ytdl"
-					>youtube download</NuxtLink
-				>-->
 				<NuxtLink
 					class="no-underline hover:underline cursor-pointer"
-					to="/external-tools"
-					>best external tools</NuxtLink
+					to="/encrypt"
+					>encrypt/decrypt</NuxtLink
+				>
+				<NuxtLink
+					class="no-underline hover:underline cursor-pointer"
+					to="/mongoid"
+					>mongoid/uuid</NuxtLink
+				>
+				<NuxtLink
+					class="no-underline hover:underline cursor-pointer"
+					to="/mcuuid"
+					>mcuuid</NuxtLink
 				>
 				<NuxtLink
 					class="no-underline hover:underline cursor-pointer"
@@ -29,14 +34,14 @@
 				>
 				<NuxtLink
 					class="no-underline hover:underline cursor-pointer"
-					to="/encrypt"
-					>encrypt/decrypt</NuxtLink
+					to="/external-tools"
+					>best external tools</NuxtLink
 				>
-				<NuxtLink
-					class="no-underline hover:underline cursor-pointer"
-					to="/mcuuid"
-					>mcuuid</NuxtLink
-				>
+				<!--<NuxtLink
+				class="no-underline hover:underline cursor-pointer"
+				to="/ytdl"
+				>youtube download</NuxtLink
+				>-->
 				<!--<NuxtLink class="no-underline hover:underline" to="/rppb"
           >rppb</NuxtLink
         >-->
