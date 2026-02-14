@@ -3,7 +3,7 @@
 		<h1>> mcuuid</h1>
 		<p class="mb-8">
 			get player UUID from username, with support for both official and pirated
-			accounts
+			accounts, or get the username from the UUID! (official only)
 		</p>
 		<div class="mb-4">
 			<p class="mb-1">Username/UUID</p>
@@ -15,31 +15,31 @@
 				class="border p-2 w-full max-w-[30rem] rounded-lg bg-slate-100"
 			/>
 		</div>
-		<div class="mb-4">
-			<p class="mb-1">Password</p>
-			<input
-				v-model="formPassword"
-				type="password"
-				autocomplete="off"
-				placeholder="Type your password"
-				class="border p-2 w-full max-w-[30rem] rounded-lg bg-slate-100"
-			/>
-		</div>
-		<div class="mb-16 flex items-center gap-2">
+		<div class="mb-4 flex items-center gap-2">
 			<p>Type</p>
 			<select
 				v-model="formMode"
 				class="border p-1 rounded-lg bg-slate-100"
 			>
-				<option value="auto">Official Minecraft / Online Mode</option>
-				<option value="encrypt">
+				<option value="online">Official Minecraft / Online Mode</option>
+				<option value="offline">
 					Pirated/Cracked Minecraft / Offline Mode
 				</option>
-				<option value="decrypt">Decrypt</option>
+				<option value="format">Format/prettify the UUID</option>
+			</select>
+		</div>
+		<div class="mb-16 flex items-center gap-2">
+			<p>Format</p>
+			<select
+				v-model="formFormat"
+				class="border p-1 rounded-lg bg-slate-100"
+			>
+				<option value="pretty">Pretty/Dashed</option>
+				<option value="raw">Raw/Undashed</option>
 			</select>
 		</div>
 		<div>
-			<p class="mb-1">Your encrypted or decrypted string</p>
+			<p class="mb-1">Result</p>
 			<textarea
 				readonly
 				v-model="formResult"
@@ -51,13 +51,14 @@
 </template>
 <script lang="ts">
 import CryptoJS from 'crypto-js'
+import axios from 'axios'
 export default {
 	name: 'Encrypt',
 	data() {
 		return {
 			formString: '',
-			formPassword: '',
-			formMode: 'auto', // auto, encrypt, decrypt
+			formMode: 'online' as 'online' | 'offline' | 'format',
+			formFormat: 'pretty' as 'pretty' | 'raw',
 			formResult: '',
 		}
 	},
@@ -69,47 +70,76 @@ export default {
 		formString() {
 			this.submitForm()
 		},
-		formPassword() {
-			this.submitForm()
-		},
 		formMode() {
 			this.submitForm()
 		},
 	},
 	methods: {
-		autoEncryptDecrypt(input: string, key: string): string {
-			if (this.formMode === 'encrypt') {
-				return CryptoJS.AES.encrypt(input, key).toString()
-			} else if (this.formMode === 'decrypt') {
-				const bytes = CryptoJS.AES.decrypt(input, key)
-				const decryptedText = bytes.toString(CryptoJS.enc.Utf8)
-				return decryptedText
-			} else {
-				// auto
-				try {
-					const bytes = CryptoJS.AES.decrypt(input, key)
-					const decryptedText = bytes.toString(CryptoJS.enc.Utf8)
-
-					if (decryptedText) {
-						return decryptedText
-					}
-				} catch (error) {}
-				return CryptoJS.AES.encrypt(input, key).toString()
-			}
-		},
-		submitForm() {
-			if (!this.formString || !this.formPassword) {
+		async submitForm() {
+			if (!this.formString || !this.formMode) {
 				this.formResult = ''
 				return
 			}
 
-			const result = this.autoEncryptDecrypt(this.formString, this.formPassword)
+			const result = await this.convertMcuuid(
+				this.formString,
+				this.formMode,
+				this.formFormat
+			)
 			if (!result) {
-				console.error('Failed to encrypt/decrypt string!')
+				this.formResult = 'Failed to get the UUID!'
+				console.error('Failed to get the UUID!')
 				return
 			}
 
 			this.formResult = result
+		},
+		async convertMcuuid(
+			nameOrId: string,
+			mode: 'online' | 'offline' | 'format',
+			format: 'pretty' | 'raw'
+		): Promise<string | undefined> {
+			const dashify = (str: string | undefined) => {
+				return str
+					? str.replace(
+							/(\w{8})(\w{4})(\w{4})(\w{4})(\w{12})/,
+							'$1-$2-$3-$4-$5'
+					  )
+					: undefined
+			}
+			const dedashify = (str: string | undefined) => {
+				return str ? str.replace(/-/g, '') : undefined
+			}
+			if (mode === 'online') {
+				let fetchRes
+				try {
+					fetchRes = await axios.get(
+						`https://corsproxy.io/?https://api.mojang.com/users/profiles/minecraft/${nameOrId}`
+					)
+				} catch (error) {}
+				let returnRes = fetchRes?.data?.id ? fetchRes.data.id : undefined
+				if (!returnRes) {
+					try {
+						fetchRes = await axios.get(
+							`https://corsproxy.io/?https://sessionserver.mojang.com/session/minecraft/profile/${nameOrId}`
+						)
+					} catch (error) {
+						//console.error('Error fetching data from Mojang API:', error)
+					}
+					returnRes = fetchRes?.data?.name ? fetchRes.data.name : undefined
+				}
+				returnRes = dedashify(returnRes)
+				return format === 'pretty' ? dashify(returnRes) : returnRes
+
+				// console.error('Error fetching data from Mojang API:', error)
+			} else if (mode === 'offline') {
+				const raw = CryptoJS.MD5(`OfflinePlayer:${nameOrId}`).toString()
+				return format === 'pretty' ? dashify(raw) : raw
+			} else if (mode === 'format') {
+				const raw = dedashify(nameOrId)
+				return format === 'pretty' ? dashify(raw) : raw
+			}
+			return
 		},
 		routerPush(to: any) {
 			this.$router.push(to)
