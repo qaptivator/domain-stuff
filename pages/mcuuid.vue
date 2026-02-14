@@ -60,6 +60,7 @@ export default {
 			formMode: 'online' as 'online' | 'offline' | 'format',
 			formFormat: 'pretty' as 'pretty' | 'raw',
 			formResult: '',
+			typingTimer: null as NodeJS.Timeout | null,
 		}
 	},
 	mounted() {},
@@ -68,7 +69,10 @@ export default {
 	},
 	watch: {
 		formString() {
-			this.submitForm()
+			if (this.typingTimer) clearTimeout(this.typingTimer)
+			this.typingTimer = setTimeout(() => {
+				this.submitForm()
+			}, 500)
 		},
 		formMode() {
 			this.submitForm()
@@ -82,7 +86,7 @@ export default {
 			}
 
 			const result = await this.convertMcuuid(
-				this.formString,
+				this.formString.trim(),
 				this.formMode,
 				this.formFormat
 			)
@@ -94,52 +98,71 @@ export default {
 
 			this.formResult = result
 		},
+		async fetchGet(url: string): Promise<{ data: any } | undefined> {
+			try {
+				const res = await fetch(url)
+				if (!res.ok) return undefined
+				const data = await res.json()
+				return { data }
+			} catch (e) {
+				return undefined
+			}
+		},
 		async convertMcuuid(
 			nameOrId: string,
 			mode: 'online' | 'offline' | 'format',
 			format: 'pretty' | 'raw'
 		): Promise<string | undefined> {
-			const dashify = (str: string | undefined) => {
-				return str
-					? str.replace(
-							/(\w{8})(\w{4})(\w{4})(\w{4})(\w{12})/,
-							'$1-$2-$3-$4-$5'
-					  )
-					: undefined
-			}
-			const dedashify = (str: string | undefined) => {
-				return str ? str.replace(/-/g, '') : undefined
-			}
-			if (mode === 'online') {
-				let fetchRes
-				try {
-					fetchRes = await axios.get(
-						`https://corsproxy.io/?https://api.mojang.com/users/profiles/minecraft/${nameOrId}`
-					)
-				} catch (error) {}
-				let returnRes = fetchRes?.data?.id ? fetchRes.data.id : undefined
-				if (!returnRes) {
-					try {
-						fetchRes = await axios.get(
-							`https://corsproxy.io/?https://sessionserver.mojang.com/session/minecraft/profile/${nameOrId}`
-						)
-					} catch (error) {
-						//console.error('Error fetching data from Mojang API:', error)
-					}
-					returnRes = fetchRes?.data?.name ? fetchRes.data.name : undefined
-				}
-				returnRes = dedashify(returnRes)
-				return format === 'pretty' ? dashify(returnRes) : returnRes
+			const dashify = (str: string) =>
+				str.replace(/(\w{8})(\w{4})(\w{4})(\w{4})(\w{12})/, '$1-$2-$3-$4-$5')
+			const dedashify = (str: string) => str.replace(/-/g, '')
 
-				// console.error('Error fetching data from Mojang API:', error)
+			if (mode === 'online') {
+				try {
+					// First attempt: Treat input as Username -> Get UUID
+					const res = await axios.get(
+						`https://corsproxy.io/?https://api.mojang.com/users/profiles/minecraft/${nameOrId}`,
+						{
+							transformResponse: (r) => r,
+						}
+					)
+					let id = res.data?.id
+
+					// Second attempt: Treat input as UUID -> Get Username
+					if (!id) {
+						const res2 = await axios.get(
+							`https://corsproxy.io/?https://sessionserver.mojang.com/session/minecraft/profile/${dedashify(
+								nameOrId
+							)}`,
+							{
+								transformResponse: (r) => r,
+							}
+						)
+						return res2.data?.name || undefined
+					}
+
+					return format === 'pretty' ? dashify(id) : id
+				} catch (e) {
+					return undefined
+				}
 			} else if (mode === 'offline') {
-				const raw = CryptoJS.MD5(`OfflinePlayer:${nameOrId}`).toString()
+				// 1. Get MD5 Bytes
+				const hash = CryptoJS.MD5(`OfflinePlayer:${nameOrId}`)
+				const words = hash.words
+
+				// 2. UUID v3 specific bit-flipping (Minecraft requirement)
+				// Set version to 3 (Name-based MD5)
+				words[1] = (words[1] & 0xffff0fff) | 0x00003000
+				// Set variant to IETF
+				words[2] = (words[2] & 0x3fffffff) | 0x80000000
+
+				const raw = hash.toString(CryptoJS.enc.Hex)
 				return format === 'pretty' ? dashify(raw) : raw
 			} else if (mode === 'format') {
 				const raw = dedashify(nameOrId)
 				return format === 'pretty' ? dashify(raw) : raw
 			}
-			return
+			return undefined
 		},
 		routerPush(to: any) {
 			this.$router.push(to)
