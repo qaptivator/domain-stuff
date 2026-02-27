@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<div class="flex items-center p-4 text-xl mb-10">
+	<div class="flex flex-col min-h-screen">
+		<header class="flex bg-white text-black items-center p-4 text-xl mb-10">
 			<img
 				src="~/assets/dstar.png"
 				class="w-16 h-16 cursor-pointer mr-2"
@@ -8,62 +8,56 @@
 			/>
 			<div class="flex overflow-x-auto space-x-10 whitespace-nowrap p-4">
 				<NuxtLink
-					class="no-underline hover:underline"
-					to="/lookup"
-					>domain lookup</NuxtLink
-				>
-				<NuxtLink
+					v-for="link in navLinks"
+					:key="link.to"
+					:to="link.to"
 					class="no-underline hover:underline cursor-pointer"
-					to="/encrypt"
-					>encrypt/decrypt</NuxtLink
+					active-class="font-semibold"
 				>
-				<NuxtLink
-					class="no-underline hover:underline cursor-pointer"
-					to="/uuid"
-					>uuid/objectid</NuxtLink
-				>
-				<NuxtLink
-					class="no-underline hover:underline cursor-pointer"
-					to="/mcuuid"
-					>mcuuid</NuxtLink
-				>
-				<NuxtLink
-					class="no-underline hover:underline cursor-pointer"
-					to="/mouse"
-					>mouse tests</NuxtLink
-				>
-				<NuxtLink
-					class="no-underline hover:underline cursor-pointer"
-					to="/external-tools"
-					>best external tools</NuxtLink
-				>
+					{{ link.label }}
+				</NuxtLink>
 				<!--<NuxtLink
 				class="no-underline hover:underline cursor-pointer"
 				to="/ytdl"
 				>youtube download</NuxtLink
 				>-->
 				<!--<NuxtLink class="no-underline hover:underline" to="/rppb"
-          >rppb</NuxtLink
-        >-->
+          		>rppb</NuxtLink
+				>-->
 				<!--
-      <NuxtLink
-        class="hover:underline underline-offset-2 cursor-pointer"
-        to="/find-song"
-        >find song</NuxtLink
-      >
-      <NuxtLink
-        class="hover:underline underline-offset-2 cursor-pointer"
-        to="/text-info"
-        >text info</NuxtLink
-      >-->
+				<NuxtLink
+					class="hover:underline underline-offset-2 cursor-pointer"
+					to="/find-song"
+					>find song</NuxtLink
+				>
+				<NuxtLink
+					class="hover:underline underline-offset-2 cursor-pointer"
+					to="/text-info"
+					>text info</NuxtLink
+				>-->
 			</div>
-		</div>
-		<slot />
+		</header>
+		<main class="flex-grow flex flex-col">
+			<slot />
+		</main>
 	</div>
 </template>
 <script lang="ts">
 export default {
 	name: 'Default',
+	data() {
+		return {
+			navLinks: [
+				{ label: 'domain lookup', to: '/lookup' },
+				{ label: 'contrast', to: '/contrast' },
+				{ label: 'encrypt/decrypt', to: '/encrypt' },
+				{ label: 'uuid/objectid', to: '/uuid' },
+				{ label: 'mcuuid', to: '/mcuuid' },
+				{ label: 'mouse tests', to: '/mouse' },
+				{ label: 'best external tools', to: '/external-tools' },
+			],
+		}
+	},
 	methods: {
 		routerPush(to: any) {
 			this.$router.push(to)
@@ -71,4 +65,12 @@ export default {
 	},
 }
 </script>
-<style lang="css"></style>
+<style lang="css">
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
+.scrollbar-hide {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+</style>
