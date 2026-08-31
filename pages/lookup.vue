@@ -5,10 +5,10 @@
 		<p class="mb-8 text-sm opacity-30">
 			powered by
 			<NuxtLink
-				to="https://dns.google/"
+				to="https://1.1.1.1/"
 				target="_blank"
 			>
-				Google Public DNS
+				Cloudflare DNS
 			</NuxtLink>
 		</p>
 		<div class="flex w-full max-w-80">
@@ -67,6 +67,7 @@
 		</div>
 	</div>
 </template>
+
 <script lang="ts">
 import axios from 'axios'
 export default {
@@ -127,9 +128,13 @@ export default {
 		async domainToIpLookup(domain: string): Promise<string> {
 			return new Promise((resolve, reject) => {
 				axios
-					.get('https://dns.google/resolve', {
+					.get('https://cloudflare-dns.com/dns-query', {
 						params: {
 							name: domain,
+							type: 'A',
+						},
+						headers: {
+							Accept: 'application/dns-json',
 						},
 						timeout: 5000,
 					})
@@ -137,45 +142,43 @@ export default {
 						const data: any = res.data
 						const status: number = data.Status
 
-						// https://help.dnsfilter.com/hc/en-us/articles/4408415850003-DNS-return-codes
 						switch (status) {
 							case 0:
 								if (data?.Answer && data?.Answer.length > 0) {
 									resolve(data.Answer[0].data)
 								} else {
 									reject('NOANSWER')
-									//resolve("");
 								}
 								break
 							case 1:
-								reject('FORMERR') // DNS Query Format Error
+								reject('FORMERR')
 								break
 							case 2:
-								reject('SERVFAIL') // Server failed to complete the DNS request
+								reject('SERVFAIL')
 								break
 							case 3:
-								resolve('') // Domain name does not exist (NXDOMAIN)
+								resolve('') // NXDOMAIN -> Domain does not exist
 								break
 							case 4:
-								reject('NOTIMP') // Function not implemented
+								reject('NOTIMP')
 								break
 							case 5:
-								reject('REFUSED') // The server refused to answer for the query
+								reject('REFUSED')
 								break
 							case 6:
-								reject('YXDOMAIN') // Name that should not exist, does exist
+								reject('YXDOMAIN')
 								break
 							case 7:
-								reject('XRRSET') // RRset that should not exist, does exist
+								reject('XRRSET')
 								break
 							case 8:
-								reject('NOTAUTH') // Server not authoritative for the zone
+								reject('NOTAUTH')
 								break
 							case 9:
-								reject('NOTZONE') // Name not in zone
+								reject('NOTZONE')
 								break
 							default:
-								reject('NOSTATUS') // Invalid status, not in 0-9 range (made by me)
+								reject('NOSTATUS')
 						}
 					})
 					.catch((error) => {
