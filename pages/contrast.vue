@@ -22,7 +22,8 @@
 					v-model="hex"
 					type="text"
 					maxlength="6"
-					class="bg-transparent text-5xl md:text-7xl font-light w-44 md:w-64 outline-none border-b-2 border-transparent focus:border-current transition-all lowercase"
+					class="bg-transparent text-5xl md:text-7xl font-light w-44 md:w-64 outline-none !border-b-2 !border-transparent focus:border-current transition-all lowercase"
+					:class="isDark ? 'focus:!border-b-white' : 'focus:!border-b-black'"
 					spellcheck="false"
 					placeholder="ffffff"
 				/>

@@ -3,7 +3,7 @@
 		<h1>> uuid</h1>
 		<p class="mb-8">
 			generate MongoDB ObjectIDs, UUIDs (v1, v4, v7, null/nil/empty), Cuid2,
-			NanoID, or ShortID.
+			NanoID, or ShortID
 		</p>
 
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 max-w-[40rem]">

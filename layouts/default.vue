@@ -54,6 +54,7 @@ export default {
 				{ label: 'uuid/objectid', to: '/uuid' },
 				{ label: 'mcuuid', to: '/mcuuid' },
 				{ label: 'mouse tests', to: '/mouse' },
+				{ label: 'localsend names', to: '/localsend-names' },
 				{ label: 'best external tools', to: '/external-tools' },
 			],
 		}
