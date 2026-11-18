@@ -22,6 +22,7 @@
 					<option value="cuid2">Cuid2 (Secure/Hashed)</option>
 					<option value="nanoid">NanoID (URL-Safe)</option>
 					<option value="shortid">ShortID (Small/Random)</option>
+					<option value="localsend">LocalSend Device Alias/Name (Funny)</option>
 				</select>
 			</div>
 			<div>
@@ -103,7 +104,7 @@
 <script lang="ts">
 import { v1 as uuidv1, v4 as uuidv4, v7 as uuidv7, NIL as NIL_UUID } from 'uuid'
 import { createId as createCuid } from '@paralleldrive/cuid2'
-import { nanoid } from 'nanoid'
+import { nanoid, random } from 'nanoid'
 
 export default {
 	name: 'MongoId',
@@ -118,7 +119,8 @@ export default {
 				| 'nanoid'
 				| 'shortid'
 				| 'guid'
-				| 'null',
+				| 'null'
+				| 'localsend',
 			formCount: 1,
 			useDashes: true,
 			useBase64: false,
@@ -169,6 +171,90 @@ export default {
 				() => alphabet[Math.floor(Math.random() * alphabet.length)]
 			).join('')
 		},
+		// generate LocalSend device aliases/names which i find/found kind of funny lmao/lol
+		generateLocalsendAlias() {
+			// source:
+			// https://github.com/localsend/localsend/blob/84b17d4b6027dda4a6c98b0f7c2011dec034e48d/app/lib/util/alias_generator.dart
+			// https://github.com/localsend/localsend/blob/84b17d4b6027dda4a6c98b0f7c2011dec034e48d/app/lib/gen/strings.g.dart
+			// https://github.com/localsend/localsend/blob/84b17d4b6027dda4a6c98b0f7c2011dec034e48d/app/lib/gen/strings_en.g.dart
+
+			const randomItem = (v: Array<any>) =>
+				v[Math.floor(Math.random() * v.length)]
+
+			const adjectives = [
+				'Adorable',
+				'Beautiful',
+				'Big',
+				'Bright',
+				'Clean',
+				'Clever',
+				'Cool',
+				'Cute',
+				'Cunning',
+				'Determined',
+				'Energetic',
+				'Efficient',
+				'Fantastic',
+				'Fast',
+				'Fine',
+				'Fresh',
+				'Good',
+				'Gorgeous',
+				'Great',
+				'Handsome',
+				'Hot',
+				'Kind',
+				'Lovely',
+				'Mystic',
+				'Neat',
+				'Nice',
+				'Patient',
+				'Pretty',
+				'Powerful',
+				'Rich',
+				'Secret',
+				'Smart',
+				'Solid',
+				'Special',
+				'Strategic',
+				'Strong',
+				'Tidy',
+				'Wise',
+			]
+
+			const fruits = [
+				'Apple',
+				'Avocado',
+				'Banana',
+				'Blackberry',
+				'Blueberry',
+				'Broccoli',
+				'Carrot',
+				'Cherry',
+				'Coconut',
+				'Grape',
+				'Lemon',
+				'Lettuce',
+				'Mango',
+				'Melon',
+				'Mushroom',
+				'Onion',
+				'Orange',
+				'Papaya',
+				'Peach',
+				'Pear',
+				'Pineapple',
+				'Potato',
+				'Pumpkin',
+				'Raspberry',
+				'Strawberry',
+				'Tomato',
+			]
+
+			// "In some languages, the adjective must be last."
+			// en: '{adjective} {fruit}'
+			return `${randomItem(adjectives)} ${randomItem(fruits)}`
+		},
 		toBase64(hex: string) {
 			try {
 				const pairs = hex.match(/\w{2}/g)
@@ -211,6 +297,9 @@ export default {
 						break
 					case 'guid':
 						id = uuidv4().toUpperCase()
+						break
+					case 'localsend':
+						id = this.generateLocalsendAlias()
 						break
 				}
 
